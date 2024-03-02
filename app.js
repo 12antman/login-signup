@@ -9,6 +9,7 @@ const userRouter = require('./api/users/user.router');
 app.use(express.json());
 
 app.use("/api/users", userRouter);
+app.use("/api/login", userRouter);
 //app.use("/api/product", productRouter);
 //app.use("/api/order", orderRouter);
 //app.use("/api/inventory", inventoryRouter);
