@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require('express');
 const app = express();
 const userRouter = require('./api/users/user.router');
-const loginRouter=require('./user.controller');
+const loginRouter=require('./api/users/user.controller');
 //const productRouter = require('./api/product/product.router');
 //const orderRouter = require('./api/order/order.router');
 //const inventoryRouter = require('./api/inventory/inventory.router');
