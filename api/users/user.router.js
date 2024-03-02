@@ -7,11 +7,11 @@ const { createUser,
 } = require("./user.controller");
 const router = require("express").Router();
 
-router.post("/addUser", createUser);
-router.get("/getUser", getUsers);
-router.patch("/updateUser", updateUser);
-router.patch("/updatePassword", updatePassword);
-router.delete("/deleteUser", deleteUser);
+router.post("/", createUser);
+router.get("/", getUsers);
+router.patch("/", updateUser);
+router.patch("/", updatePassword);
+router.delete("/", deleteUser);
 router.post("/login", login);
 
 module.exports = router;
