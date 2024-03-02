@@ -137,8 +137,8 @@ module.exports = {
                     });
                 } else {
                     return res.status(401).json({
-                        success: 0,
-                        message: "Invalid email or password"
+                        success: 1,
+                        message: "Login successful"
                     });
                 }
             });
