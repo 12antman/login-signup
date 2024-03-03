@@ -3,7 +3,7 @@ const { createUser,
     updateUser,
     updatePassword,
     deleteUser,
-    //login
+    login
     } = require("./user.controller");
 const router = require("express").Router();
 
@@ -12,6 +12,6 @@ router.get("/", getUsers);
 router.patch("/", updateUser); 
 router.patch("/", updatePassword); 
 router.delete("/", deleteUser); 
-//router.post("/login",login); 
+router.post("/login",login); 
 
 module.exports = router;

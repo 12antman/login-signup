@@ -75,23 +75,19 @@ module.exports = {
 
     getUserByEmail: (email, callBack) => {
         pool.query(
-            `SELECT * FROM registration WHERE email = ?`,
+            `select * from registration where email = ?`,
             [email],
-            (error, results, fields) => {
-                if (error) {
-                    // Pass the error to the callback function
-                    return callBack(error);
-                }
-                // Check if any user is found
-                if (results.length === 0) {
-                    // If no user found, return null as the second parameter
-                    return callBack(null, null);
-                }
-                // Log the retrieved user object
-                console.log("Retrieved user:", results[0]);
-                // Return the first result (assuming email is unique)
-                return callBack(null, results[0]);
+        (error, results, fields) => {
+            if (error) {
+                return callBack(error);
             }
-        );
-    }
+            if (results.length === 0) {
+                console.log("No user found with email:", email);
+                return callBack(null, null);
+            }
+            console.log("Retrieved user:", results[0]);
+            return callBack(null, results[0]);
+        }
+    );
+}
 };
