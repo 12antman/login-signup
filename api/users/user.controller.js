@@ -126,8 +126,6 @@ deleteUser: (req, res) => {
 },
 login: (req, res) => {
     const { email, password } = req.body;
-
-    // Retrieve user from the database based on email
     getUserByEmail(email, (err, user) => {
         if (err) {
             console.log(err);
@@ -137,6 +135,7 @@ login: (req, res) => {
             });
         }
         if (!user) {
+            // User with the provided email does not exist
             return res.status(401).json({
                 success: 0,
                 message: "Invalid email or password"
@@ -144,27 +143,18 @@ login: (req, res) => {
         }
 
         // Compare hashed password with the password sent by the user
-        bcrypt.compare(password, user.password, (err, passwordMatch) => {
-            if (err) {
-                console.log(err);
-                return res.status(500).json({
-                    success: 0,
-                    message: "An error occurred"
-                });
-            }
-
-            if (passwordMatch) {
-                // Passwords match, login successful
-                return res.json({
-                    success: 1,
-                    message: "Login successful",
-                    user: {
-                        id: user.id,
-                        email: user.email
-                        // Add any other user details you want to include
-                    }
-                });
-            } else {
+        if (password === user.password) { // Assuming `user.password` is also plaintext
+            // Passwords match, login successful
+            return res.json({
+                success: 1,
+                message: "Login successful",
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                }
+            });
+        } else {
                 // Passwords don't match
                 return res.status(401).json({
                     success: 0,
@@ -172,6 +162,5 @@ login: (req, res) => {
                 });
             }
         });
-    });
 }
-};
+}
