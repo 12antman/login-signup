@@ -135,32 +135,38 @@ login: (req, res) => {
             });
         }
         if (!user) {
-            // User with the provided email does not exist
             return res.status(401).json({
                 success: 0,
                 message: "Invalid email or password"
             });
         }
 
-        // Compare hashed password with the password sent by the user
-        if (password === user.password) { // Assuming `user.password` is also plaintext
-            // Passwords match, login successful
-            return res.json({
-                success: 1,
-                message: "Login successful",
-                user: {
-                    id: user.id,
-                    name: user.name,
-                    email: user.email,
-                }
-            });
-        } else {
-                // Passwords don't match
+        bcrypt.compare(password, user.password, (err, passwordMatch) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    success: 0,
+                    message: "An error occurred"
+                });
+            }
+
+            if (passwordMatch) {
+                return res.json({
+                    success: 1,
+                    message: "Login successful",
+                    user: {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email
+                    }
+                });
+            } else {
                 return res.status(401).json({
                     success: 0,
                     message: "Invalid email or password"
                 });
             }
         });
+    });
 }
 }
